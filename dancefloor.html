@@ -8,6 +8,7 @@
     <script src="src/blinkyDancer.js"></script>
     <script src="src/ColorDancer.js"></script>
     <script src="src/SpinDancer.js"></script>
+    <script src="src/RippleDancer.js"></script>
 
 
   </head>
@@ -18,11 +19,28 @@
       <a href="#" class="addDancerButton" data-dancer-maker-function-name="BlinkyDancer">add a blinky dancer</a>
       <a href="#" class="addDancerButton" data-dancer-maker-function-name="ColorDancer">add a color dancer</a>
       <a href="#" class="addDancerButton" data-dancer-maker-function-name="SpinDancer">add a spin dancer</a>
+      <a href="#" class="addDancerButton" data-dancer-maker-function-name="RippleDancer">add a ripple dancer</a>
+      <a href="#" class="LineupButton">Line Up</a>
     </div>
 
     <script>
       $(document).ready(function(){
         window.dancers = [];
+
+        $(".LineupButton").on("click", function(event){
+          console.log(window.dancers);
+          $.each(window.dancers, function(index, dancer){
+              if (dancer.lineup) {
+                dancer.lineup = false;
+                dancer.setPosition();
+              }else{
+                dancer.$node.css('left', '15px');
+                dancer.lineup = true;
+              }
+              //dancer.$node.css('display', 'block');
+          })
+
+        })
 
         $(".addDancerButton").on("click", function(event){
           /* This function sets up the click handlers for the create-dancer
@@ -49,6 +67,8 @@
             Math.random() * 1000
           );
 
+          window.dancers.push(dancer);
+          console.log(window.dancers.length);
           $('body').append(dancer.$node);
         });
       });
